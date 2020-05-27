@@ -13,7 +13,7 @@ Resources:
     Type: AWS::EC2::Instance
     Properties:
       InstanceType: t2.micro
-      ImageId: ami-0d6621c01e8c2de2c
+      ImageId: ami-003634241a8fcdec0
       # Ideally you want to only put the key during the time that you execute
       # this script. Remove it immediately after
       # Remember: If you push this, the key name will be public
@@ -21,7 +21,7 @@ Resources:
       SubnetId: 
         Fn::ImportValue:
           !Sub "${EnvironmentName}-PUB1-SN"
-      SecurityGroupId:
+      SecurityGroupIds:
         - !Ref JenkinsServerSecurityGroup
       UserData:
         Fn::Base64: !Sub |
@@ -41,11 +41,27 @@ Resources:
     Properties: 
       # A description for the security group
       # String
-      GroupDescription: Allow ssh to/from our bastion host
+      GroupDescription: Allow ssh to/from our Jenkins Server
+      # The name of the security group
+      # GroupName: String
+      # The outbound rules associated with the security group
+      SecurityGroupEgress:
+      - IpProtocol: tcp
+        FromPort: 8080
+        ToPort: 8080
+        CidrIp: 0.0.0.0/0 # Change this to my IP Address
+      - IpProtocol: tcp
+        FromPort: 22
+        ToPort: 22
+        CidrIp: 0.0.0.0/0 # Change this to my IP Address
       # The name of the security group
       # GroupName: String
       # The inbound rules associated with the security group
       SecurityGroupIngress: 
+      - IpProtocol: tcp
+        FromPort: 8080
+        ToPort: 8080
+        CidrIp: 0.0.0.0/0 # Change this to my IP Address
       - IpProtocol: tcp
         FromPort: 22
         ToPort: 22
