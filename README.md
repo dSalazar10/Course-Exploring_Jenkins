@@ -1,17 +1,17 @@
 # Course-Exploring_Jenkins
 Udacity Cloud DevOps Engineer Nano Degree Course 3
 
-The source code has two AWS CloudFormation scripts:
-1) Network
-- This will setup a VPC with 2 Availbility Zones, each containing 2 subnets and one NAT Gateway
-2) Jenkins Server
-- This will create an Ubuntu Instance for use with Jenkins
+The command to log into the the Bastion using SSH:
+`ssh ec2-user@18.236.152.223 -i bastion-key.pem`
+(replce with public ip address)
 
-The command to log into the the server using SSH:
+To trasnfer a key over:
+`scp -i bastion-key.pem jenkins-key.pem ec2-user@0.0.0.0:/home/ec2-user/jenkins-key.pem`
+(replce 0.0.0.0 with public ip address)
 
-`ssh ubuntu@0.0.0.0 -i jenkins-key.pem`
+To list docker containers:
+`docker container ls`
 
-(repalce 0.0.0.0 with the public ip address of the EC2 Instance)
-
-Note: For security purposes, you could replace the CIDR blocks on the ingress/egress of the Jenkins
-Security Group from 0.0.0.0/0 to your computer's public IP address.
+To get initial admin password:
+`docker exec aaaaaa00000 cat /var/jenkins_home/secrets/initialAdminPassword`
+(replace aaaaaa00000 with Container ID)
