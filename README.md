@@ -20,6 +20,7 @@ To list docker containers:
 To get initial admin password:
 
 `docker exec aaaaaa00000 cat /var/jenkins_home/secrets/initialAdminPassword`
+
 (replace aaaaaa00000 with Container ID)
 
 ![](Jenkins.jpeg)
