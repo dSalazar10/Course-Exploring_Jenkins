@@ -3,7 +3,7 @@ pipeline {
      stages {
          stage('Build') {
              steps {
-                 sh 'sudo echo "export PATH=/usr/bin/tidy:$PATH" >> ~/.bashrc'
+                 sh 'echo "export PATH=/usr/bin/tidy:$PATH" >> ~/.bashrc'
                  sh 'echo $PATH'
                  sh '''
                      echo "Multiline shell steps works too"
