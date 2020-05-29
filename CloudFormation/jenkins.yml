@@ -101,7 +101,7 @@ Resources:
       # Provides the name or the Amazon Resource Name (ARN) of the instance profile associated with the IAM role for the instance
       #IamInstanceProfile: String
       # Provides the unique ID of the Amazon Machine Image (AMI) that was assigned during registration
-      ImageId: ami-0d6621c01e8c2de2c
+      ImageId: ami-003634241a8fcdec0
       # The ID of the Amazon EC2 instance you want to use to create the launch configuration
       #InstanceId: String
       # Controls whether instances in this group are launched with detailed (true) or basic (false) monitoring
