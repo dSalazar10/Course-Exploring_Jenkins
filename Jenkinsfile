@@ -3,7 +3,7 @@ pipeline {
      stages {
          stage('Build') {
              steps {
-                 sh 'echo %PATH%'
+                 sh 'echo $PATH'
                  sh '''
                      echo "Multiline shell steps works too"
                      ls -lah
