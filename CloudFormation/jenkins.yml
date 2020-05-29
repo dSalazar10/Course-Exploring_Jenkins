@@ -129,13 +129,22 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          # Setup the Repo
-          sudo yum update -y
-          sudo amazon-linux-extras install docker
-          wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat/jenkins.repo
-          rpm --import http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key
-          yum install jenkins
-          sudo usermod -a -G docker ec2-user
+          # Install Docker
+          sudo apt-get update
+          sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+          sudo add-apt-repository \
+          "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+          $(lsb_release -cs) \
+          stable"
+          sudo apt-get update
+          sudo apt-get install docker-ce docker-ce-cli containerd.io
+          wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+          sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+          sudo apt-get update
+          sudo apt-get install jenkins
+
+          sudo usermod -a -G docker ubuntu
           service docker start
           service jenkins start
           chkconfig docker on
