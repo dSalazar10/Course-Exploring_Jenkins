@@ -131,24 +131,19 @@ Resources:
           #!/bin/bash
           # Install Docker
           sudo apt-get update
-          sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
-          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-          sudo add-apt-repository \
-          "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-          $(lsb_release -cs) \
-          stable"
-          sudo apt-get update
-          sudo apt-get install docker-ce docker-ce-cli containerd.io
+          curl -fsSL https://get.docker.com -o get-docker.sh
+          sudo sh get-docker.sh
+          sudo usermod -a -G docker ubuntu
+          sudo service docker start
+          sudo chkconfig docker on
+          # Install Jenkins
           wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
           sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
           sudo apt-get update
-          sudo apt-get install jenkins
-
-          sudo usermod -a -G docker ubuntu
-          service docker start
-          service jenkins start
-          chkconfig docker on
-          chkconfig jenkins on
+          sudo apt-get install jenkins tidy -y
+          sudo service jenkins start
+          sudo chkconfig jenkins on
+          # Run Jenkins in Docker
           sudo docker run -p 8080:8080 jenkins/jenkins:lts
 
 

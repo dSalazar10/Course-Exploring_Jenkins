@@ -1,12 +1,18 @@
 #!/bin/bash
 function GetStackName {
     stackname="JenkinsServer"
+    #stackname="BastionServer"
+    #stackname="NetworkServer"
 }
 function GetTemplateName {
     tempfile="jenkins.yml"
+    #tempfile="bastion.yml"
+    #tempfile="network.yml"
 }
 function GetParameterName {
     paramfile="jenkins-parameters.json"
+    #paramfile="bastion-parameters.json"
+    #paramfile="network-parameters.json"
 }
 function PromptUser {
     printf "\033c"
