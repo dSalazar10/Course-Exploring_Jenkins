@@ -3,7 +3,7 @@ pipeline {
      stages {
          stage('Build') {
              steps (tidyInstallationName: 'tidy-5.2.0', configId: null) {
-                 sh 'tidy -v'
+                 sh '/usr/bin/tidy -v'
              }
          }
          stage('Lint HTML') {
