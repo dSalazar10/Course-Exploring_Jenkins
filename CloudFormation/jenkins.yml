@@ -106,7 +106,7 @@ Resources:
       # Specifies whether the launch configuration is optimized for EBS I/O (true) or not (false)
       #EbsOptimized: Boolean
       # Provides the name or the Amazon Resource Name (ARN) of the instance profile associated with the IAM role for the instance
-      IamInstanceProfile: JenkinsIAMInstanceProfile
+      #IamInstanceProfile: JenkinsIAMInstanceProfile
       # Provides the unique ID of the Amazon Machine Image (AMI) that was assigned during registration
       ImageId: ami-003634241a8fcdec0
       # The ID of the Amazon EC2 instance you want to use to create the launch configuration
@@ -375,7 +375,8 @@ Resources:
       # The name of the group to update
       GroupName: !Ref 'JenkinsIAMGroup'
       # A list of the names of the users that you want to add to the group
-      Users: !Ref 'JenkinsIAMUser'
+      Users: 
+      - !Ref 'JenkinsIAMUser'
 
   JenkinsIAMKeys:
     Type: AWS::IAM::AccessKey
@@ -391,3 +392,6 @@ Outputs:
   SecretKey:
     Value: !GetAtt [JenkinsIAMKeys, SecretAccessKey]
     Description: AWSSecretAccessKey of Jenkins user
+  JenkinsServer:
+    Description: The URL Associated with the Jenkins Server
+    Value: !GetAtt JenkinsLB.DNSName

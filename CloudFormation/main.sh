@@ -1,24 +1,10 @@
 #!/bin/bash
-function GetStackName {
-    stackname="JenkinsServer"
-    #stackname="BastionServer"
-    #stackname="NetworkServer"
-}
-function GetTemplateName {
-    tempfile="jenkins.yml"
-    #tempfile="bastion.yml"
-    #tempfile="network.yml"
-}
-function GetParameterName {
-    paramfile="jenkins-parameters.json"
-    #paramfile="bastion-parameters.json"
-    #paramfile="network-parameters.json"
-}
 function PromptUser {
     printf "\033c"
     echo "~~~~~~~~~~~~~"
     echo "| Main Menu |"
     echo "~~~~~~~~~~~~~"
+    echo "Stack: ${stackname}"
     echo ""
     echo "Select from the following options:"
     echo "1) Create Stack"
@@ -26,7 +12,7 @@ function PromptUser {
     echo "3) Delete Stack"
     echo "4) Describe Stacks"
     echo "5) Validate Template"
-    echo "6) Get Template"
+    echo "6) Setup Stack"
     echo "7) Exit"
     echo "~:"
 }
@@ -78,19 +64,38 @@ function DescribeStack {
     aws cloudformation describe-stacks --stack-name $stackname
     sleep 1
 }
-function GetTemplate {
+function SetupStack {
     printf "\033c"
     echo "~~~~~~~~~~~~~"
-    echo "| GetTempl  |"
+    echo "| SetupStack |"
     echo "~~~~~~~~~~~~~"
     echo ""
-    aws cloudformation get-template --stack-name $stackname
-    sleep 1
+    echo "Select from the following options:"
+    echo "1) Jenkins Server"
+    echo "2) Bastion Server"
+    echo "3) Network Server"
+    echo "~:"
+    read choice
+    case $choice in
+        1)
+            stackname="JenkinsServer"
+            tempfile="jenkins.yml"
+            paramfile="jenkins-parameters.json"
+            ;;
+        2) 
+            stackname="BastionServer"
+            tempfile="bastion.yml"
+            paramfile="bastion-parameters.json"
+            ;;
+        3)
+            stackname="NetworkServer"
+            tempfile="network.yml"
+            paramfile="network-parameters.json"
+            ;;
+    esac
 }
 function CloudFormationModifications {
-    GetStackName
-    GetTemplateName
-    GetParameterName
+    SetupStack
     choice = 0 
     PromptUser
     while read choice
@@ -113,7 +118,7 @@ function CloudFormationModifications {
                 read end_wait
                 ;;
             6)
-                GetTemplate
+                SetupStack
                 ;;
             7) 
                 echo "Exiting program!"
