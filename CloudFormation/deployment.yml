@@ -1,0 +1,37 @@
+Parameters:
+  EnvironmentName:
+    Description: An environment name that will be prefixed to resource names
+    Type: String
+
+Resource:
+    Route53HostedZone: 
+    Type: "AWS::Route53::HostedZone"
+    Properties: 
+      HostedZoneConfig: 
+        Comment: 'My hosted zone for example.com'
+      Name: 'example.com'
+      VPCs: 
+        - 
+          VPCId: 
+            Fn::ImportValue:
+              !Sub "${EnvironmentName}-VPCID"
+          VPCRegion: 'us-west-2'
+      HostedZoneTags: 
+        - 
+          Key: 'SampleKey1'
+          Value: 'SampleValue1'
+        
+  Route53HealthCheck: 
+    Type: 'AWS::Route53::HealthCheck'
+    Properties: 
+      HealthCheckConfig: 
+        Port: 80
+        Type: HTTP
+        ResourcePath: '/example/index.html'
+        FullyQualifiedDomainName: example.com
+        RequestInterval: 30
+        FailureThreshold: 3
+      HealthCheckTags: 
+        - 
+          Key: SampleKey1
+          Value: SampleValue1
