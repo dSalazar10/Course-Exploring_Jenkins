@@ -6,5 +6,9 @@
     {
 		"ParameterKey": "Password",
 		"ParameterValue": "JenkinsPassword1"
+    },
+    {
+    "ParameterKey": "BucketName",
+		"ParameterValue": "static-jenkins-pipeline"
     }
 ]
