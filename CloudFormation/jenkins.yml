@@ -7,6 +7,13 @@ Parameters:
   EnvironmentName:
     Description: An environment name that will be prefixed to resource names
     Type: String
+  Password:
+    NoEcho: 'true'
+    Type: String
+    Description: Jenkins user account password
+    MinLength: '1'
+    MaxLength: '17'
+    ConstraintDescription: the password must be between 1 and 17 characters
 
 Resources:
   ELBSecGroup:
@@ -99,7 +106,7 @@ Resources:
       # Specifies whether the launch configuration is optimized for EBS I/O (true) or not (false)
       #EbsOptimized: Boolean
       # Provides the name or the Amazon Resource Name (ARN) of the instance profile associated with the IAM role for the instance
-      #IamInstanceProfile: String
+      IamInstanceProfile: JenkinsIAMInstanceProfile
       # Provides the unique ID of the Amazon Machine Image (AMI) that was assigned during registration
       ImageId: ami-003634241a8fcdec0
       # The ID of the Amazon EC2 instance you want to use to create the launch configuration
@@ -141,6 +148,7 @@ Resources:
           sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
           sudo apt-get update
           sudo apt-get install jenkins tidy -y
+          sudo echo "export PATH=/usr/bin/tidy:$PATH" >> ~/.bashrc
           sudo service jenkins start
           sudo chkconfig jenkins on
           # Run Jenkins in Docker
@@ -303,7 +311,6 @@ Resources:
       # The rule priority. A listener can't have multiple rules with the same priority
       #Priority: Integer
 
-# (9) Application Load Balancer
   JenkinsLB:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties: 
@@ -332,3 +339,55 @@ Resources:
       #  - Tag
       # The type of load balancer
       #Type: String
+
+  JenkinsIAMPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      # Adds full access to CloudWatch, S3, and EC2
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action:
+              - 'cloudwatch:*'
+              - 's3:*'
+              - 'ec2:*'
+            Resource: '*'
+      # The friendly name (not ARN) identifying the policy
+      PolicyName: JenkinsIAMUsers
+      Groups:
+        - !Ref JenkinsIAMGroup
+
+  JenkinsIAMUser:
+    Type: AWS::IAM::User
+    Properties:
+      # Creates a password for the specified user, giving the user the
+      # ability to access AWS services through the AWS Management Console
+      LoginProfile:
+        Password: !Ref 'Password'
+        
+  JenkinsIAMGroup:
+    Type: AWS::IAM::Group
+
+  JenkinsIAMUsers:
+    Type: AWS::IAM::UserToGroupAddition
+    Properties:
+      # The name of the group to update
+      GroupName: !Ref 'JenkinsIAMGroup'
+      # A list of the names of the users that you want to add to the group
+      Users: !Ref 'JenkinsIAMUser'
+
+  JenkinsIAMKeys:
+    Type: AWS::IAM::AccessKey
+    Properties:
+      UserName: !Ref 'JenkinsIAMUser'
+
+  
+
+Outputs:
+  AccessKey:
+    Value: !Ref 'JenkinsIAMKeys'
+    Description: AWSAccessKeyId of Jenkins user
+  SecretKey:
+    Value: !GetAtt [JenkinsIAMKeys, SecretAccessKey]
+    Description: AWSSecretAccessKey of Jenkins user

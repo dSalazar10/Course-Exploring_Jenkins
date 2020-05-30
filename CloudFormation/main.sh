@@ -110,6 +110,7 @@ function CloudFormationModifications {
                 ;;
             5)
                 ValidateTemplate
+                read end_wait
                 ;;
             6)
                 GetTemplate
