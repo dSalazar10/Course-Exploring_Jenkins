@@ -26,8 +26,10 @@ To get initial admin password:
 (replace aaaaaa00000 with Container ID)
 
 Jenkins Plugins:
-- Blue Ocean
-- Pipeline: AWS Steps
-- SafeRestart
+- Blue Ocean (create pipelines)
+- Pipeline: AWS Steps (get aws credentials w/ CloudFormation)
+- Safe Restart (avoid cli restarts of Jenkins)
+- Aqua MicroScanner (get token @ microscanner.aquasec.com/signup)
+
 
 ![](Jenkins.jpeg)
