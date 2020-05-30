@@ -25,4 +25,9 @@ To get initial admin password:
 
 (replace aaaaaa00000 with Container ID)
 
+Jenkins Plugins:
+- Blue Ocean
+- Pipeline: AWS Steps
+- SafeRestart
+
 ![](Jenkins.jpeg)

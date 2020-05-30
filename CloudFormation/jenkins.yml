@@ -14,9 +14,6 @@ Parameters:
     MinLength: '1'
     MaxLength: '17'
     ConstraintDescription: the password must be between 1 and 17 characters
-  BucketName:
-    Description: The name of the S3 Bucket
-    Type: String
 
 
 Resources:
@@ -389,8 +386,6 @@ Resources:
 
   S3Bucket:
     Type: AWS::S3::Bucket
-    Properties:
-      BucketName: !Ref 'BucketName'
 
   BucketPolicy:
     Type: AWS::S3::BucketPolicy
@@ -420,3 +415,6 @@ Outputs:
   JenkinsServer:
     Description: The URL Associated with the Jenkins Server
     Value: !GetAtt JenkinsLB.DNSName
+  BucketName:
+    Value: !Ref 'S3Bucket'
+    Description: Name of the Amazon S3 bucket hosting the static website
