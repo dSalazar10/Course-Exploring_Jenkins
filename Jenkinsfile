@@ -12,8 +12,7 @@ pipeline {
          }
          stage('Lint HTML') {
                steps {
-                   sh 'printenv'
-                   sh 'tidy -q -e *.html'
+                   sh '/usr/bin/tidy -q -e *.html'
                }
          }
          stage('Security Scan') {
