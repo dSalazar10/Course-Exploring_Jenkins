@@ -1,3 +1,12 @@
+Description:
+  This is just a template of the two main compionents used in a Blue/Green Deployment
+  The course lession did not cover how to perform the actions using CloudFormation
+  1) Setup a private Route53 Zone
+  2) Configure a health check
+  3) Run Blue Deployment
+  4) Run Green deployment
+  5) Check Route53 Entries
+
 Parameters:
   EnvironmentName:
     Description: An environment name that will be prefixed to resource names
