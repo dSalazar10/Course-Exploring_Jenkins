@@ -25,11 +25,22 @@ To get initial admin password:
 
 (replace aaaaaa00000 with Container ID)
 
+If you need to execute a command inside of a running Docker:
+
+`sudo docker exec -u root -it <docker_name> <shell_commands>`
+
 Jenkins Plugins:
 - Blue Ocean (create pipelines)
 - Pipeline: AWS Steps (get aws credentials w/ CloudFormation)
 - Safe Restart (avoid cli restarts of Jenkins)
-- Aqua MicroScanner (get token @ microscanner.aquasec.com/signup)
+- Aqua MicroScanner (get token @ https://microscanner.aquasec.com/signup)
+
+Configurations:
+- AWS Credentials (JenkinsIAMKeys)
+- Scan Repository Triggers = 1 min
+- Aqua Microscanner Token
+- Docker
+
 
 
 ![](Jenkins.jpeg)

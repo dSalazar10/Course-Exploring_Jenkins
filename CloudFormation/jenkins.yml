@@ -141,16 +141,17 @@ Resources:
           sudo apt-get update
           curl -fsSL https://get.docker.com -o get-docker.sh
           sudo sh get-docker.sh
-          sudo usermod -a -G docker ubuntu
-          sudo service docker start
-          sudo chkconfig docker on
           # Install Jenkins
           wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
           sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
           sudo apt-get update
-          sudo apt-get install jenkins tidy -y
+          sudo apt-get install -y jenkins tidy
           sudo service jenkins start
           sudo chkconfig jenkins on
+          # Configure Docker
+          sudo usermod -a -G docker ubuntu
+          sudo service docker start
+          sudo chkconfig docker on
           # Run Jenkins in Docker
           sudo docker run -p 8080:8080 jenkins/jenkins:lts
 
