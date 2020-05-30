@@ -2,12 +2,8 @@ pipeline {
      agent any
      stages {
          stage('Build') {
-             steps {
-                 sh 'echo "Hello World!"'
-                 sh '''
-                     echo "Multiline shell steps works too"
-                     ls -lah
-                 '''
+             steps (tidyInstallationName: 'tidy-5.2.0', configId: null) {
+                 sh 'tidy -v'
              }
          }
          stage('Lint HTML') {
