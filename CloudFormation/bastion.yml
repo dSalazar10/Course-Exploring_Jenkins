@@ -27,7 +27,7 @@ Resources:
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
-          sudo yum update
+          sudo apt-get update
 
   BastionHostSecurityGroup:
     Type: AWS::EC2::SecurityGroup
