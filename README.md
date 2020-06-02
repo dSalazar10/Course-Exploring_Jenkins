@@ -1,6 +1,10 @@
 # Course-Exploring_Jenkins
 Udacity Cloud DevOps Engineer Nano Degree Course 3
 
+This demonstrates how to automatically configure infrastructure using CloudFormation.
+It is an implementation of a Continuous Development Code Pipeline using Jenkins.
+
+
 http://jenki-jenki-1bdokdp6tz04u-121480052.us-west-2.elb.amazonaws.com/
 
 The command to log into the the Bastion using SSH:
